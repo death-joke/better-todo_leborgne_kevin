@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {createNewTask, INITIAL_TASKS} from './task-util';
 import PropTypes from 'prop-types';
 import './Todo.css';
+import OneTdo from './dumbs/OneTodo'; 
 
 let refresh = 1;
 
@@ -73,19 +74,13 @@ export function Todo() {
                   <label htmlFor="toggle-all">Tâches finies</label>
                   <ul className="todo-list">
                       {tasks.map((task) => (
-                        <li key={task.id} className={task.completed ? 'completed' : ''}>
-                            <div className="view">
-                                <input
-                                  id={'task_' + task.id}
-                                  type="checkbox"
-                                  className="toggle"
-                                  checked={task.completed}
-                                  onChange={() => onComplete(task)}
-                                />
-                                <label htmlFor={'task_' + task.id}>{task.label}</label>
-                                <button className="destroy" onClick={() => onDestroy(task)}/>
-                            </div>
-                        </li>
+                        <OneTdo
+                            key={task.id}
+                            task={task}
+                            onComplete={onComplete}
+                            onDestroy={onDestroy}
+                        />
+                        
                       ))}
                   </ul>
               </section>
