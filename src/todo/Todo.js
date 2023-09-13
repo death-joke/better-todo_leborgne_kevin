@@ -57,11 +57,11 @@ export function Todo() {
   }
 
   const filteredTasks = tasks.filter((task) => {
-    if (filter === 'ALL') {
+    if (filter === "ALL") {
       return true;
-    } else if (filter === 'ACTIVE') {
+    } else if (filter === "ACTIVE") {
       return !task.completed;
-    } else if (filter === 'COMPLETED') {
+    } else if (filter === "COMPLETED") {
       return task.completed;
     }
   });
@@ -106,33 +106,46 @@ export function Todo() {
             <strong>{remainingTasks} tâches restantes</strong>
           </span>
           <ul className="filters">
-            <li>
-              <a
-                className={filter === "ALL" ? "selected" : ""}
-                onClick={() => onFilterClick("ALL")}
-              >
-                ALL
-              </a>
-            </li>
-            <li>
-              <a
-                className={filter === "ACTIVE" ? "selected" : ""}
-                onClick={() => onFilterClick("ACTIVE")}
-              >
-                ACTIVE
-              </a>
-            </li>
-            <li>
-              <a
-                className={filter === "COMPLETED" ? "selected" : ""}
-                onClick={() => onFilterClick("COMPLETED")}
-              >
-                COMPLETED
-              </a>
-            </li>
+            <ActionFilterButton
+              filter="ALL"
+              currentFilter={filter}
+              onFilterClick={onFilterClick}
+            >
+              ALL
+            </ActionFilterButton>
+            <ActionFilterButton
+              filter="ACTIVE"
+              currentFilter={filter}
+              onFilterClick={onFilterClick}
+            >
+              ACTIVE
+            </ActionFilterButton>
+            <ActionFilterButton
+              filter="COMPLETED"
+              currentFilter={filter}
+              onFilterClick={onFilterClick}
+            >
+              COMPLETED
+            </ActionFilterButton>
           </ul>
         </footer>
       </section>
     </div>
+  );
+}
+
+function ActionFilterButton({
+  filter,
+  currentFilter,
+  onFilterClick,
+  children,
+}) {
+  const className = filter === currentFilter ? "selected" : "";
+  return (
+    <li>
+      <a className={className} onClick={() => onFilterClick(filter)}>
+        {children}
+      </a>
+    </li>
   );
 }
