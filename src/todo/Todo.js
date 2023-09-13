@@ -3,6 +3,7 @@ import { createNewTask, INITIAL_TASKS } from "./task-util";
 import PropTypes from "prop-types";
 import "./Todo.css";
 import OneTdo from "./dumbs/OneTodo";
+import NewTodoForm from "./dumbs/Newform";
 
 let refresh = 1;
 
@@ -72,16 +73,7 @@ export function Todo() {
         <header className="header">
           <h1>Todo APP</h1>
         </header>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <input
-            type="text"
-            className="new-todo"
-            placeholder="Ajouter une tâche"
-            autoComplete="off"
-            autoFocus={true}
-            onKeyDown={onCreateTask}
-          />
-        </form>
+        <NewTodoForm onCreateTask={onCreateTask} />
         <section className="main">
           <input
             type="checkbox"
