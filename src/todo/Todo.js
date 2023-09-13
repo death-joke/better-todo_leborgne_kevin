@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { createNewTask, INITIAL_TASKS } from "./task-util";
-import PropTypes from "prop-types";
 import "./Todo.css";
-import OneTdo from "./dumbs/OneTodo";
 import NewTodoForm from "./dumbs/Newform";
+import TodoList from "./dumbs/ListTodo.js";
+import ActionFilterButton from "./dumbs/ActionFilterButton";
 
 let refresh = 1;
 
@@ -57,42 +57,18 @@ export function Todo() {
     setFilter(filter);
   }
 
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === "ALL") {
-      return true;
-    } else if (filter === "ACTIVE") {
-      return !task.completed;
-    } else if (filter === "COMPLETED") {
-      return task.completed;
-    }
-  });
-
   return (
     <div className="App">
       <section className="todoapp">
-        <header className="header">
-          <h1>Todo APP</h1>
-        </header>
         <NewTodoForm onCreateTask={onCreateTask} />
-        <section className="main">
-          <input
-            type="checkbox"
-            id="toggle-all"
-            className="toggle-all"
-            onClick={(e) => onToggle(e.target.checked)}
-          />
-          <label htmlFor="toggle-all">Tâches finies</label>
-          <ul className="todo-list">
-            {filteredTasks.map((task) => (
-              <OneTdo
-                key={task.id}
-                task={task}
-                onComplete={onComplete}
-                onDestroy={onDestroy}
-              />
-            ))}
-          </ul>
-        </section>
+
+        <TodoList
+          tasks={tasks}
+          filter={filter}
+          onComplete={onComplete}
+          onDestroy={onDestroy}
+          onToggle={onToggle}
+        />
         <footer className="footer">
           <span className="todo-count">
             <strong>{remainingTasks} tâches restantes</strong>
@@ -123,21 +99,5 @@ export function Todo() {
         </footer>
       </section>
     </div>
-  );
-}
-
-function ActionFilterButton({
-  filter,
-  currentFilter,
-  onFilterClick,
-  children,
-}) {
-  const className = filter === currentFilter ? "selected" : "";
-  return (
-    <li>
-      <a className={className} onClick={() => onFilterClick(filter)}>
-        {children}
-      </a>
-    </li>
   );
 }
